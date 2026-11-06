@@ -47,40 +47,6 @@ Album.Web/
 └── README.md             # Dokumentasi proyek
 ```
 
----
-
-## 🚀 Cara Menjalankan
-
-1. **Jalankan Secara Lokal:**
-   - Cukup klik dua kali (*double click*) pada berkas `index.html`, atau buka melalui browser apa pun (Google Chrome, Microsoft Edge, Firefox, Safari).
-   - Atau jalankan dengan ekstensi *Live Server* di VS Code jika diinginkan.
-
-2. **Memperbarui Foto Galeri:**
-   - Foto dapat diperbarui secara langsung melalui tautan GitHub Gist yang terdaftar di `js/config.js` (`PHOTO_API_URL`).
-   - Format file JSON di Gist dapat berupa array string URL gambar:
-     ```json
-     [
-       "https://i.ibb.co/.../foto1.jpg",
-       "https://i.ibb.co/.../foto2.jpg"
-     ]
-     ```
-   - Galeri akan otomatis mengambil dan memperbarui foto secara instan tanpa perlu mengubah berkas kode utama.
-
----
-
-## 🌐 Cara Publikasi / Deploy (Gratis)
-
-Website ini adalah situs statis murni sehingga sangat mudah di-online-kan secara gratis:
-
-1. **Vercel / Netlify:**
-   - Buat akun di [Vercel](https://vercel.com/) atau [Netlify](https://www.netlify.com/).
-   - Hubungkan repositori GitHub proyek ini, lalu klik **Deploy**. Website akan langsung aktif dengan domain HTTPS gratis (contoh: `moments-gallery.vercel.app`).
-2. **GitHub Pages:**
-   - Masuk ke repositori GitHub Anda di menu **Settings** > **Pages**.
-   - Pilih *Source*: `Deploy from a branch` (branch `main`), lalu simpan. Dalam hitungan detik web Anda sudah aktif di internet!
-
----
-
 ## 🛠️ Teknologi yang Digunakan
 
 - **HTML5 & Semantic Markup**
