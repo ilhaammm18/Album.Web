@@ -1,0 +1,245 @@
+/* ==========================================================================
+   Moments — Interactive Photography Wall
+   Custom Stylesheet
+   ========================================================================== */
+
+/* ---------- Reset & Base ---------- */
+html,
+body {
+  margin: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: #080808;
+  color: #f5f5f5;
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ---------- View Fade System (WALL / ABOUT) ---------- */
+.view {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), visibility 0s linear 0.7s;
+}
+
+.view.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), visibility 0s;
+}
+
+/* ---------- Header ---------- */
+#site-header {
+  transition: background-color 0.5s ease, border-color 0.5s ease;
+}
+
+#site-header::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 -40px 0;
+  background: linear-gradient(to bottom, rgba(8, 8, 8, 0.85), rgba(8, 8, 8, 0.35) 60%, rgba(8, 8, 8, 0));
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+  z-index: -1;
+}
+
+#site-header.is-about {
+  background-color: rgba(8, 8, 8, 0.86);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+#site-header.is-about::before {
+  opacity: 0;
+}
+
+.nav-link {
+  position: relative;
+  color: rgba(255, 255, 255, 0.5);
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -7px;
+  height: 1px;
+  background: #fff;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.nav-link.is-active {
+  color: #fff;
+}
+
+.nav-link.is-active::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+#hint {
+  transition: opacity 0.4s ease;
+}
+
+#hint.is-hidden {
+  opacity: 0;
+}
+
+/* ---------- Wall ---------- */
+#wall {
+  cursor: default;
+}
+
+.card {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #141414;
+  pointer-events: none;
+  transform-origin: center center;
+  will-change: transform;
+  contain: layout paint;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.55);
+  transition: opacity 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  pointer-events: none;
+}
+
+.card.is-hovered,
+.card.is-active {
+  box-shadow: 0 26px 65px -10px rgba(0, 0, 0, 0.95), 0 12px 28px -6px rgba(0, 0, 0, 0.85);
+}
+
+#wall.has-focus .card:not(.is-hovered):not(.is-active) {
+  opacity: 0.38;
+}
+
+.card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+
+.card img.loaded {
+  opacity: 1;
+}
+
+/* Caption overlay (hanya muncul saat hover biasa, hilang saat aktif) */
+.cap {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.86) 0%, rgba(0, 0, 0, 0.35) 38%, rgba(0, 0, 0, 0) 68%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.card.is-hovered:not(.is-active) .cap {
+  opacity: 1;
+}
+
+.card.is-active .cap {
+  opacity: 0 !important;
+  display: none !important;
+}
+
+/* Counter-scale so caption text renders at a constant visual size */
+.cap-inner {
+  transform-origin: left bottom;
+  transform: scale(var(--inv, 1));
+  padding: 14px 16px;
+  white-space: nowrap;
+}
+
+.cap-cat {
+  font-size: 10px;
+  letter-spacing: 0.28em;
+  color: rgba(255, 255, 255, 0.72);
+  font-weight: 500;
+}
+
+.cap-title {
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-size: 24px;
+  line-height: 1.1;
+  color: #fff;
+  margin-top: 2px;
+}
+
+/* Dim background wall cards when centre view is active */
+#wall.is-dimmed .card {
+  opacity: 0.3 !important;
+  filter: blur(2px) !important;
+  transition: opacity 0.4s ease, filter 0.4s ease !important;
+}
+
+/* Bottom-left wall overlay vignette */
+#wall-overlay::before {
+  content: '';
+  position: absolute;
+  inset: -120px -200px 0 0;
+  background: radial-gradient(ellipse at 15% 100%, rgba(8, 8, 8, 0.92) 0%, rgba(8, 8, 8, 0.55) 45%, rgba(8, 8, 8, 0) 72%);
+  z-index: -1;
+}
+
+/* ---------- Centre Focus Modal & Backdrop ---------- */
+#centre-backdrop {
+  z-index: 40;
+}
+
+#centre-overlay {
+  z-index: 50;
+}
+
+#centre-frame {
+  filter: none !important;
+  opacity: 1 !important;
+  brightness: 100% !important;
+  background: #0d0d0d;
+}
+
+#centre-img {
+  filter: none !important;
+  opacity: 1 !important;
+  brightness: 100% !important;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: high-quality;
+}
+
+/* ---------- About Entrance Stagger ---------- */
+.about-item {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+#about.is-visible .about-item {
+  opacity: 1;
+  transform: none;
+}
+
